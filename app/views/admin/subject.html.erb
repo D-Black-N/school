@@ -1,0 +1,38 @@
+<div class='header'>
+  <p class='text-center text'>Администратор расписания<p>
+</div>
+
+<div class='row'>
+
+  <div class='col-4 offset-1'>
+    <h3 class='text-center'>Список предметов</h3>
+    <% unless @lessons.empty? %>
+
+      <ol class='list'>
+        <% @lessons.each do |subj| %>
+          <li><%= subj.name %></li>
+        <% end %>
+      </ol>
+
+    <% else %>
+      <p>Список предметов отсутствует<p>
+    <% end %>
+
+  </div>
+  <div class='col-4 offset-2'>
+    <h3>Добавить предмет</h3>
+    <%= form_for @new_lesson, url: admin_add_subject_path, method: 'post' do |f| %>
+
+      <div class='row col-7'>
+        <%= f.label :name, 'Название' %>
+        <%= f.text_field :name %>
+      </div>
+
+      <div class='row col-3' style='margin: 10px'>
+        <%= f.submit 'Добавить' %>
+      </div>
+
+    <% end %>
+  </div>
+</div>
+

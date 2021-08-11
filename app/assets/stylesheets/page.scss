@@ -1,0 +1,94 @@
+// Place all the styles related to the Page controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+@import 'bootstrap';
+
+.header{
+  background-color: #49688e;
+  min-height: 35px; 
+}
+
+.text{
+  color: white;
+  font-weight: bold;
+  padding: 5px;
+}
+
+.main{
+  height: 90vh;
+  margin: 0px;
+  max-width: none;
+}
+
+.image{
+  margin: 10px;
+}
+
+#img{
+  width: 110px;
+  margin: 10px;
+}
+
+#school-info{
+  margin-top: 25px;
+}
+
+#mobu{
+  color: #294a70; 
+  font-size: 28px; 
+  font-weight: bold;
+  margin-bottom: 0px;
+}
+
+#addr{
+  color: #666666; 
+  font-size: 14px;
+  font-weight: 400; 
+  letter-spacing: 1.4px; 
+  margin-bottom: 0;
+}
+
+// все что ниже, для отрисовки, в итогой версии убрать!!!
+#table{
+  min-height: 56vh;
+}
+
+.tab{ 
+  border-width: 2px;
+  border-style: solid;
+  border-color: red;
+}
+
+#digital-clock{
+  min-height: 11vh;
+  text-align: center;
+}
+
+#analog-clock{
+  height: 45vh;
+  text-align: center;
+}
+
+#message{
+  margin-top: 1vh;
+  border-width: 2px;
+  min-height: 13vh;
+  border-style: solid;
+  border-color: red;
+}
+
+#canvas{
+  background-image: url(clock.jpg);
+  background-size: 100%;
+  background-position: center;
+  width: 45vh;
+  height: 45vh;
+  position: relative;
+}
+
+#sec{
+  height: 28vh;
+  margin: 1vh;
+  animation: linear;
+  // transform: rotate(30deg);
+}

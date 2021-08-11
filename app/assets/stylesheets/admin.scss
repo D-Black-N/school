@@ -1,0 +1,22 @@
+// Place all the styles related to the admin controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+@import 'bootstrap';
+
+#l2, #l3, #l4{
+    display: none;
+}
+
+#m1, #s4 {
+    display: none;
+}
+
+div.col-8.select{
+    display: grid;
+    padding: 0px;
+}
+
+#list{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 20px;
+}

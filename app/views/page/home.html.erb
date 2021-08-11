@@ -1,0 +1,77 @@
+<div class='header'>
+  <p class='text-center text'>Добро пожаловать в наше учебное заведение!<p>
+</div>
+
+<div class='container main'>
+  <div class='row main-info'>
+    <div class='col-lg-2 offset-1'>
+      <%= image_tag "logo.png", id: 'img', alt: 'kaltschool1.ru' %>
+    </div>
+    <div class='col-8' id='school-info'>
+      <p id='mobu'>МОБУ Калтасинская СОШ №1</p>
+      <p  id='addr'>
+        Дата создания: 1924 год. Адрес: 452860, Республика Башкортостан, 
+        Калтасинский район, с. Калтасы, ул. Карла Маркса,80. 
+      </p>
+    </div>
+  </div>
+  <div class='row'>
+    <div id='table' class='tab col-8'>
+      <% unless @lessons.empty? %>
+        <table class='table table-borderless'>
+          <thead>
+            <tr>
+              <th>Класс</th>
+              <th>Предмет</th>
+              <th>Преподаватель</th>
+              <th>Время окончания</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @lessons.each do |obj| %>
+              <tr>
+                <td><%= obj.class_id %></td>
+                <td><%= obj.object %></td>
+                <td><%= obj.teacher %></td>
+                <td><%= obj.t_end %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p>В данный момент отсутствуют уроки. 
+          Вы можете просмотреть полное расписание по седующей ссылке</p>
+      <% end %>
+    </div>
+
+    <div class='col-4'>
+      <div class='row'>
+
+        <div id='digital-clock' class='tab'> 
+        </div>
+        
+        <div id='date'>
+        </div>
+
+      </div>
+
+      <div class='row'>
+        <div id='analog-clock' class='tab'>
+       <!--   <%= image_tag "clock.jpg", id: 'analog-clock', alt: 'kaltschool1.ru' %> -->
+          <canvas id="canvas">
+            <%= image_tag "second.png", id: 'sec' %>
+          </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id='message'>
+  
+  </div>
+</div>
+
+<div class='footer'>
+</div>
+
+<%= javascript_pack_tag 'analog' %>

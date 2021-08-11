@@ -1,0 +1,72 @@
+<div class='header'>
+  <p class='text-center text'>Администратор расписания<p>
+</div>
+
+<div class='row'>
+  <div class='col-4 text-center offset-1'>
+    <h3>Список преподавателей</h3>
+    <% unless @teachers.empty? %>
+
+      <table class='table table-borderless'>
+        <thead>
+          <th>Преподаватель</th>
+          <th>Предмет</th>
+        </thead>
+
+        <tbody>
+          <% @teachers.each do |t| %>
+            <tr>
+              <td><%= t.FIO %></td>
+              <td><%= t.lessons.map { |el| el.name }.join("/") %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+    <% else %>
+      <p>Список преподавателей пуст<p>
+    <% end %>
+  </div>
+  <div class='col-4 offset-2'>
+    <h3>Добавить преподавателя</h3>
+    <%= form_with model: @new_teacher, url: admin_add_teacher_path, method: 'post' do |f| %>
+
+      <div class='row' id='FIO'>
+        <%= f.label :FIO, 'Фамилия И.О.' %>
+        <%= f.text_field :FIO, class: 'col-8' %>
+      </div>
+
+      <% 4.times do |ind| %>
+        <div class='row' id='l<%= ind + 1 %>'>
+          <%= f.label :lesson, "Предмет #{ind + 1}" %>
+          <div class='col-8 select'>
+            <%= f.fields_for :lesson do |lesson_fields| %>
+              <%= lesson_fields.collection_select :id, @lessons, :id, :name, include_blank: true %>
+            <% end %>
+          </div>
+          <%= f.submit '+', class: 'col-1 offset-1 plus', id: "s#{ind + 1}", type: :button %>
+        </div>
+      <% end %>
+
+      <div class='row col-3' style='margin: 10px'>
+        <%= f.submit 'Добавить', id: "add" %>
+      </div>
+
+    <% end %>
+  </div>
+</div>
+
+<%= javascript_pack_tag 'L_plus', 'data-turbolinks-track': 'reload' %>
+
+
+      <%# <%= t.fields_for :lesson, @lesson do |p| %> 
+        <%# <% 4.times do |ind| %> 
+          <%# <div class='row' id='l1'> %>
+            <%# <%= f.label :lesson_id, 'Предмет 1' %> 
+            <%# <div class='col-8 select'> %>
+              <%# <%= f.select :lesson_id, options_for_select(@lessons), include_blank: true %> 
+            <%# </div> %>
+            <%# <%= f.submit '+', class: 'col-2 offset-1 plus', id: 's1', type: :button %> 
+          <%# </div> %>
+        <%# <% end %> 
+      <%# <% end %> 
