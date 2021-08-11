@@ -21,6 +21,7 @@
   end
 
 View:
+<code>
   <div class='col-4 offset-2'>
     <h3>Добавить преподавателя</h3>
     <%= form_with model: @new_teacher, url: admin_add_teacher_path, method: 'post' do |f| %>
@@ -48,3 +49,4 @@ View:
 
     <% end %>
   </div>
+</code>
