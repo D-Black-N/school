@@ -9,7 +9,7 @@
 Модели Lesson и Teacher имеют отношение many to many и работают через связанную таблицу
 
 Метод контроллера: 
-  
+<code>  
   def teacher
     @teachers = Teacher.all
     @new_teacher = Teacher.new
@@ -19,6 +19,7 @@
       format.html
     end
   end
+</code>
 
 View:
 <code>
