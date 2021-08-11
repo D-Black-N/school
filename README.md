@@ -11,13 +11,21 @@
 Метод контроллера: 
 <code>  
   def teacher
+
     @teachers = Teacher.all
+
     @new_teacher = Teacher.new
+
     @lessons = Lesson.all #.map { |subj| [subj.name, subj.id] }
+
     respond_to do |format|
+
       format.js
+
       format.html
+
     end
+    
   end
 </code>
 
