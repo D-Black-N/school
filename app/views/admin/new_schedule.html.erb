@@ -1,0 +1,91 @@
+<div class='header'>
+  <p class='text-center text'>Администратор расписания</p>
+</div>
+
+<div class='schedule_form'>
+
+  <%= form_with model: @new_schedule, url: admin_add_schedule_path, method: :post do |f| %>
+    <div class='row'>
+      <div class='class_id col-3 offset-1'>
+        <%= f.label :class_id, 'Класс:' %>
+        <%= f.text_field :class_id, placeholder: "Например: 5А" %>
+      </div>
+      <div class='col-2 offset-1'>
+        <%= f.submit 'Добавить' %>
+      </div>
+    </div>
+
+    <div id='week_schedule'>
+      <div class='row'>
+        <% 5.times do |ind| %>
+          <%= f.fields_for "week_days[#{ind}]" do |t| %>
+
+            <div class='col-6'>
+              <div class='week_day text-center'>
+                <%= t.label :day, @week[ind] %>
+              </div>
+              <%= t.hidden_field :day, value: @week[ind] %>
+
+                <div class='schedule_table'>
+                  <table class='table table-borderless my_table'>
+                    <thead class='text-center'>
+                      <tr>
+                        <th>№</th>
+                        <th>Предмет</th>
+                        <th>Преподаватель</th>
+                        <th>Начало</th>
+                        <th>Конец</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <%= t.fields_for :lessons do |l| %>
+                        <% 7.times do |count| %>
+                          <%= l.fields_for ('1'..'7').to_a[count] do |lesson_fields| %>
+                            <tr>
+                              <td class='number'>
+                                <%= count + 1 %>
+                              </td>
+
+                              <td>
+                                <%= lesson_fields.fields_for :subject do |sub_field| %>
+                                  <%= sub_field.collection_select :id, @lessons, 
+                                            :id, :name, include_blank: true %>
+                                <% end %>
+                              </td>
+
+                              <td>
+                                <%= lesson_fields.fields_for :teacher do |t_field| %>
+                                  <%= t_field.collection_select :id, @teachers, 
+                                              :id, :FIO, include_blank: true %>
+                                <% end %>
+                              </td>
+
+                              <td>
+                                <%= lesson_fields.fields_for :t_start do |st| %>
+                                  <%= st.time_select :time, minute_step: 5, 
+                                              default: {hour: "0#{count + 9}", minute: "00"} %>
+                                <% end %>
+                              </td>
+
+                              <td>
+                                <%= lesson_fields.fields_for :t_end do |et| %>
+                                  <%= et.time_select :time, minute_step: 5, 
+                                              default: {hour: "0#{count + 9}", minute: "00"} %>
+                                <% end %>
+                              </td>
+                            </tr>
+                          <% end %>
+                        <% end %>
+                      <% end %>
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<%= javascript_pack_tag 'scroll_schedule' %>

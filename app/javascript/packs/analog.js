@@ -1,21 +1,18 @@
 jQuery(function(){
-  let x0 = $("#canvas").width() / 2
-  let y0 = $("#canvas").height() / 2
-  let canvas = $("#canvas")
-  console.log(canvas, canvas.nodeName)
-  let ctx = canvas.getContext("2d")
-  setInterval(() => {
-    var now = new Date()
-    var angle = now.getSeconds() * 6 
-    console.log(angle)
-    $("#sec").css('transform', 'rotate(' + angle + 'deg)')
-
-    // var x = x0 + x0 * Math.sin(rad)
-    // var y = y0/2 - y0 * Math.cos(rad)/2
-    // ctx.beginPath()
-    // ctx.moveTo(x0, y0/2)
-    // ctx.lineTo(x, y)
-    // ctx.strokeStyle = '#000000'
-    // ctx.stroke()
-  }, 1000);
+    time = new Date()
+    $("#hour").css({'transform' : 'rotate('+ (time.getHours()*30 + time.getMinutes()*0.5) +'deg)'})
+    $("#min").css({'transform' : 'rotate('+ time.getMinutes()*6 +'deg)'})
+    $("#sec").css({'transform' : 'rotate('+ time.getSeconds()*6 +'deg)'});        
+    setInterval(() => {
+        date = new Date()
+        sec = date.getSeconds()
+        $("#sec").css({'transform' : 'rotate('+ sec*6 +'deg)'});  
+        if (sec == 0){
+            min = date.getMinutes()
+            hour = date.getHours()
+            hour = (hour >= 12)? hour - 12: hour;
+            $("#min").css({'transform' : 'rotate('+ min*6 +'deg)'})
+            $("#hour").css({'transform' : 'rotate('+ (hour*30 + min*0.5) +'deg)'})
+        }
+    }, 1000);            
 })

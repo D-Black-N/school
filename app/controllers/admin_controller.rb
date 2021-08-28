@@ -1,47 +1,52 @@
 class AdminController < ApplicationController
-  # before_action :set_array, only: [:add_teacher]
-
-  def add
-    @schedule = Schedule.new
-    @week_day = ['Вс', "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"]
+  # медоты, работающие с расписанием
+  def schedule
+    s_array = Schedule.group(:class_id).order(:class_id)
+                      .map { |elem| elem.class_id }
+    @classes = s_array.map { |val| s_array.select { |el| el[1] == val[1] } }.uniq  
   end
 
-  def delete
-  end
-
-  def update
-  end
-
-  def subject
+  def new_schedule
+    @new_schedule = Schedule.new
     @lessons = Lesson.all
+    @teachers = Teacher.all
+    @week = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница"]
+  end
+
+  def add_schedule
+    schedule = Schedule.new
+    schedule_init = schedule.init_with_teach_les(schedule_params)
+    respond_to do |format|
+      unless schedule_init.nil?
+        format.html { redirect_to admin_schedule_path }
+        format.json { render json: schedule_init }
+      else
+        format.html { redirect_to admin_schedule_path }
+        format.json { render json: [schedule_init, schedule_params] }
+      end
+    end
+  end
+
+  def update_class
+    @week = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница"]
+    @schedule_class = Schedule.where(class_id: params[:class_id])
+    @lessons = Lesson.all
+    @teachers = Teacher.all
+  end
+
+  def destroy_all_schedules 
+  
+  end
+
+  # методы, работающие со школьными предметами
+  def subject
+    @error = params[:err]
+    @lessons = Lesson.all.order(:name)
     @new_lesson = Lesson.new
     respond_to do |format|
       format.html
-      format.json { render json: @schedule } 
+      format.json { render json: @lessons } 
     end
-  end
-
-  def teacher
-    @teachers = Teacher.all
-    @new_teacher = Teacher.new
-    @lessons = Lesson.all #.map { |subj| [subj.name, subj.id] }
-    respond_to do |format|
-      format.js
-      format.html
-    end
-  end
-
-  def add_teacher
-    p "----------------------------------------------------------------------------"
-    p "See that: #{teacher_params}"
-    teacher = Teacher.new(teacher_params)
-      if teacher.save
-        redirect_to admin_teacher_path
-        # render json: "teacher was successfully added"
-      else
-        render json: [teacher, teacher_params]
-      end
-    # end
   end
 
   def add_subject
@@ -51,9 +56,61 @@ class AdminController < ApplicationController
         format.html { redirect_to admin_subject_path }
         format.json { render json: subj }
       else
-        format.html { redirect_to admin_subject_path}
+        format.html { redirect_to admin_subject_path }
         format.json { render json: [subj, subject_params] }
       end  
+    end
+  end
+
+  def destroy_subject
+    destroy_res = DestroySubject.call(params[:id])
+    respond_to do |format|
+      if destroy_res
+        format.html { redirect_to admin_subject_path }
+        format.json { render json: "Данные успешно удалены"}
+      else
+        format.html { redirect_to admin_subject_path(err: destroy_res) }
+        format.json { render json: "Невозможно удалить данные" }
+      end
+    end
+  end
+
+  # методы, работающие с преподавателями
+  def teacher
+    @teachers = Teacher.all
+    @new_teacher = Teacher.new
+    @new_teacher.lessons.build
+    @lessons = Lesson.all
+    respond_to do |format|
+      format.js
+      format.html
+    end
+  end
+
+  def add_teacher
+    th = Teacher.new
+    teacher = th.lesson_init(teacher_params)
+    respond_to do |format|
+      unless teacher.nil?
+        format.html { redirect_to admin_teacher_path }
+        format.json { render json: teacher }
+      else
+        format.html { redirect_to admin_teacher_path }
+        format.json { render json: teacher_params }
+      end
+    end
+  end
+
+  def destroy_teacher
+    destroy_res = DestroyTeacher.call(params[:id])
+    respond_to do |format|
+      if destroy_res
+        format.html { redirect_to admin_teacher_path }
+        format.json { render json: "Данные успешно удалены"}
+      else
+        format.html { redirect_to admin_teacher_path(err: destroy_res) }
+        format.json { render json: "Невозможно удалить преподавателя"}
+      end
     end
   end
 
@@ -64,7 +121,10 @@ class AdminController < ApplicationController
   end
 
   def teacher_params 
-    p params[:teacher][:lessons]
-    params.require(:teacher).permit(:FIO, lesson_attributes: [:name])
+    params.require(:teacher).permit(:FIO, lessons_attributes: [:id])
+  end
+
+  def schedule_params
+    params.require(:schedule).permit!
   end
 end

@@ -7,13 +7,14 @@
   <div class='col-4 offset-1'>
     <h3 class='text-center'>Список предметов</h3>
     <% unless @lessons.empty? %>
-
-      <ol class='list'>
+      <table class='table table-borderless'>
         <% @lessons.each do |subj| %>
-          <li><%= subj.name %></li>
+          <tr>
+            <td><%= subj.name %></td>
+            <td><%= link_to "Удалить", admin_destroy_subject_path(id: subj.id), method: :delete %></td>
+          </tr>
         <% end %>
-      </ol>
-
+      </table>
     <% else %>
       <p>Список предметов отсутствует<p>
     <% end %>
@@ -33,6 +34,12 @@
       </div>
 
     <% end %>
+
+    <div class='message'>
+      <% unless @error.nil? %>
+        <p>Невозможно удалить данные, присутствует связь с преподавателем и расписанием</p>
+      <% end %>
+    </div>
   </div>
 </div>
 

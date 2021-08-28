@@ -48,47 +48,80 @@
   margin-bottom: 0;
 }
 
-// все что ниже, для отрисовки, в итогой версии убрать!!!
 #table{
-  min-height: 56vh;
+  height: 56vh;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
 }
 
-.tab{ 
-  border-width: 2px;
-  border-style: solid;
-  border-color: red;
+@media (max-width: 1000px) {
+  .large_display{
+    display: none;
+  }
+}
+
+.data{
+  height: 11vh;
+  text-align: center;
+  color: #030773;
+  font-family: Verdana, Geneva, Tahoma, sans-serif; 
 }
 
 #digital-clock{
-  min-height: 11vh;
-  text-align: center;
+  font-size: 4.5vh;
 }
 
-#analog-clock{
-  height: 45vh;
-  text-align: center;
+#date{
+  font-size: 3vh;
 }
 
 #message{
   margin-top: 1vh;
-  border-width: 2px;
   min-height: 13vh;
-  border-style: solid;
-  border-color: red;
 }
 
-#canvas{
-  background-image: url(clock.jpg);
-  background-size: 100%;
-  background-position: center;
-  width: 45vh;
+// аналоговые часы
+#analog-clock{
   height: 45vh;
+  background-image: url(clock.png);
+  background-size: 67%;
+  background-position: center;
   position: relative;
+  background-repeat: no-repeat;
 }
 
 #sec{
-  height: 28vh;
-  margin: 1vh;
-  animation: linear;
-  // transform: rotate(30deg);
+  height: 45vh;
+  width: 4vh;
+  background-image: url(sec.png);
+  background-repeat: no-repeat;
+  position: absolute;
+  background-position-x: center;
+  background-position-y: 0.175vh;
+  background-size: 77.5%;
+  left: 46.95%;
+}
+
+#min{
+  height: 45vh;
+  width: 4vh;
+  background-image: url(min.png);
+  background-repeat: no-repeat;
+  position: absolute;
+  background-position-y: 3vh;
+  background-position-x: center;
+  background-size: 80%;
+  left: 47%;
+}
+
+#hour{
+  height: 45vh;
+  width: 4vh;
+  background-image: url(hour.png);
+  background-repeat: no-repeat;
+  position: absolute;
+  background-position-y: 8.75vh;
+  background-position-x: center;
+  background-size: 70%;
+  left: 47%;
 }

@@ -11,14 +11,14 @@
       <p id='mobu'>МОБУ Калтасинская СОШ №1</p>
       <p  id='addr'>
         Дата создания: 1924 год. Адрес: 452860, Республика Башкортостан, 
-        Калтасинский район, с. Калтасы, ул. Карла Маркса,80. 
+        Калтасинский район, с. Калтасы, ул. Карла Маркса, 80
       </p>
     </div>
   </div>
   <div class='row'>
-    <div id='table' class='tab col-8'>
+    <div id='table' class='col-8'>
       <% unless @lessons.empty? %>
-        <table class='table table-borderless'>
+        <table class='table table-borderless text-center'>
           <thead>
             <tr>
               <th>Класс</th>
@@ -31,36 +31,32 @@
             <% @lessons.each do |obj| %>
               <tr>
                 <td><%= obj.class_id %></td>
-                <td><%= obj.object %></td>
-                <td><%= obj.teacher %></td>
-                <td><%= obj.t_end %></td>
+                <td><%= obj.lessons[0].name %></td>
+                <td><%= obj.teachers[0].FIO %></td>
+                <td><%= obj.t_end.strftime("%H:%M") %></td>
               </tr>
             <% end %>
           </tbody>
         </table>
       <% else %>
-        <p>В данный момент отсутствуют уроки. 
-          Вы можете просмотреть полное расписание по седующей ссылке</p>
+        <div class='text-center'>В данный момент отсутсвует расписание </div>
       <% end %>
     </div>
 
-    <div class='col-4'>
-      <div class='row'>
-
-        <div id='digital-clock' class='tab'> 
+    <div class='col-4 large_display'>
+      <div class='row data'>
+        <div id='date'></div>
+        <div id='digital-clock'>
         </div>
-        
-        <div id='date'>
-        </div>
-
       </div>
 
       <div class='row'>
-        <div id='analog-clock' class='tab'>
-       <!--   <%= image_tag "clock.jpg", id: 'analog-clock', alt: 'kaltschool1.ru' %> -->
-          <canvas id="canvas">
-            <%= image_tag "second.png", id: 'sec' %>
-          </canvas>
+        <div id='analog-clock'>
+          <div id="hour"></div>
+
+          <div id="min"></div>        
+          
+          <div id="sec"></div>
         </div>
       </div>
     </div>
@@ -75,3 +71,4 @@
 </div>
 
 <%= javascript_pack_tag 'analog' %>
+<%= javascript_pack_tag 'update_schedule' %>

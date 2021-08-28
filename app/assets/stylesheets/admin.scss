@@ -20,3 +20,38 @@ div.col-8.select{
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 20px;
 }
+
+#classes{
+    min-height: 50vh;
+}
+
+.schedule_form{
+    margin-top: 20px;
+}
+
+input[type='text']{
+    padding: 2px 12px;
+}
+
+#week_schedule{
+    margin-top: 10px;
+}
+
+.table > :not(caption) > tr > td {
+    padding-left: 0px;
+    padding-right: 0.2rem;
+}
+
+td.number {
+    text-align: center;
+}
+
+.week_day{
+    background-color: #294a70;
+    color: white;
+    font-weight: bold;
+}
+
+body{
+    scroll-behavior: smooth;
+}

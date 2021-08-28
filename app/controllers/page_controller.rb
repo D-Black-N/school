@@ -1,17 +1,15 @@
 class PageController < ApplicationController
   def home
-    @lessons = Schedule.find_by_sql("
-      SELECT s.class_id, l.name as object, t.FIO as teacher, s.t_end 
-      FROM schedules s, lessons l, teachers t
-      WHERE s.lesson_id = l.id and s.teacher_id = t.id
-    ")
+    @date = DateTime.now.strftime("%Y %m %d")
+    time = Time.now.change({ year: 2000, month: 1, day: 1, offset: 0})
+    wday = ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"]
+    @lessons = Schedule.where("week_day = ? and t_start <= ? and t_end >= ?", 
+                              wday[time.wday - 1],
+                              time + 5.minutes,
+                              time - 3.minutes).order(:class_id)
     respond_to do |format|    
       format.js
-      format.html   
+      format.html
     end
   end
-
-  private
-
-  
 end

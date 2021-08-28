@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_11_081341) do
+ActiveRecord::Schema.define(version: 2021_08_15_063506) do
+
+  create_table "lesson_schedules", force: :cascade do |t|
+    t.integer "lesson_id", null: false
+    t.integer "schedule_id", null: false
+    t.index ["lesson_id"], name: "index_lesson_schedules_on_lesson_id"
+    t.index ["schedule_id"], name: "index_lesson_schedules_on_schedule_id"
+  end
 
   create_table "lesson_teachers", force: :cascade do |t|
     t.integer "lesson_id", null: false
@@ -23,19 +30,28 @@ ActiveRecord::Schema.define(version: 2021_08_11_081341) do
     t.string "name", null: false
   end
 
+  create_table "schedule_teachers", force: :cascade do |t|
+    t.integer "schedule_id", null: false
+    t.integer "teacher_id", null: false
+    t.index ["schedule_id"], name: "index_schedule_teachers_on_schedule_id"
+    t.index ["teacher_id"], name: "index_schedule_teachers_on_teacher_id"
+  end
+
   create_table "schedules", force: :cascade do |t|
     t.string "class_id", null: false
-    t.integer "lesson_id", null: false
+    t.string "week_day", null: false
     t.time "t_start", null: false
     t.time "t_end", null: false
-    t.integer "teacher_id", null: false
-    t.string "week_day", null: false
   end
 
   create_table "teachers", force: :cascade do |t|
     t.string "FIO", null: false
   end
 
+  add_foreign_key "lesson_schedules", "lessons"
+  add_foreign_key "lesson_schedules", "schedules"
   add_foreign_key "lesson_teachers", "lessons"
   add_foreign_key "lesson_teachers", "teachers"
+  add_foreign_key "schedule_teachers", "schedules"
+  add_foreign_key "schedule_teachers", "teachers"
 end
