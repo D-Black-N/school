@@ -1,0 +1,33 @@
+<div class='header'>
+  <p class='text-center text'>Администратор расписания</p>
+</div>
+
+<div class='container'>
+  <div class='text-center main-menu'>
+    <h4>Главное меню</h4>
+  </div>
+
+  <div id='buttons', class='col-6 offset-3 text-center'>
+    <div class='sb'>
+      <%= button_to "Предметы", admin_subject_path, method: :get, type: :submit, style: "width: 100%" %>
+    </div>
+    
+    <div class='sb'>
+      <%= button_to "Преподаватели", admin_teacher_path, method: :get, type: :submit, style: "width: 100%" %>
+    </div>
+    
+    <div class='sb'>
+      <%= button_to "Расписание", admin_schedule_path, method: :get, type: :submit, style: "width: 100%" %>
+    </div>
+
+    <div class='sb'>
+      <%= button_to "Редактировать профиль", admin_passwd_path, method: :get, type: :submit, style: "width: 100%" %>
+    </div>
+
+    <div class='sb'>
+      <%= button_to "Выход", logout_path, method: :delete, type: :submit, style: "width: 100%" %>
+    </div>
+
+  </div>
+  
+</div>

@@ -10,7 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_15_063506) do
+ActiveRecord::Schema.define(version: 2021_09_16_173050) do
+
+  create_table "admins", force: :cascade do |t|
+    t.string "login"
+    t.string "password_digest"
+    t.index ["login"], name: "index_admins_on_login", unique: true
+  end
 
   create_table "lesson_schedules", force: :cascade do |t|
     t.integer "lesson_id", null: false
@@ -28,6 +34,7 @@ ActiveRecord::Schema.define(version: 2021_08_15_063506) do
 
   create_table "lessons", force: :cascade do |t|
     t.string "name", null: false
+    t.index ["name"], name: "index_lessons_on_name", unique: true
   end
 
   create_table "schedule_teachers", force: :cascade do |t|
@@ -42,10 +49,12 @@ ActiveRecord::Schema.define(version: 2021_08_15_063506) do
     t.string "week_day", null: false
     t.time "t_start", null: false
     t.time "t_end", null: false
+    t.index ["class_id", "week_day", "t_start", "t_end"], name: "index_schedules_on_class_id_and_week_day_and_t_start_and_t_end"
   end
 
   create_table "teachers", force: :cascade do |t|
     t.string "FIO", null: false
+    t.index ["FIO"], name: "index_teachers_on_FIO"
   end
 
   add_foreign_key "lesson_schedules", "lessons"

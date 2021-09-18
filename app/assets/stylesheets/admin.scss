@@ -55,3 +55,24 @@ td.number {
 body{
     scroll-behavior: smooth;
 }
+
+.main-menu{
+    margin: 10px;
+}
+
+.sb{
+    margin: 20px;
+}
+
+.go_back{
+    display: inline-block;
+    width: 43%;
+    text-align: right;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a.go_back:hover{
+    color: white;
+}

@@ -5,13 +5,23 @@
 
 .header{
   background-color: #49688e;
-  min-height: 35px; 
+  min-height: 35px;
 }
 
 .text{
   color: white;
   font-weight: bold;
   padding: 5px;
+}
+
+.text_adm{
+  color: white;
+  font-weight: bold;
+  padding: 5px;
+  display: inline-block;
+  width: 55%;
+  text-align: right;
+  margin: 0px;
 }
 
 .main{

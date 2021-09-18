@@ -1,0 +1,25 @@
+<div class='header'>
+  <p class='text-center text'>Администратор расписания</p>
+</div>
+
+<div class='container col-3', style='margin-top: 10vh'>
+  <%= form_for :session, url: login_path do |f| %>
+    <div class='row'>
+      <%= f.label :login, "Логин" %>
+      <%= f.text_field :login %>
+    </div>
+
+    <div class='row'>
+      <%= f.label :password, "Пароль" %>
+      <%= f.password_field :password %>
+    </div>
+
+    <div style='margin-top: 20px', class='row'>
+      <%= f.submit "Войти" %>
+    </div>
+  <% end %>
+
+  <div id='message'>
+    <%= @message unless @message.nil? %>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<div class='header'>
+  <p class='text_adm'>Администратор расписания</p>
+  <%= link_to 'На главную', admin_index_path, method: :get, class: 'go_back' %>
+</div>
+
+<div class='col-4 container' style='margin-top: 20px'>
+  <%= form_with model: @teacher, url: admin_update_teacher_path, method: :post do |f| %>
+    <div class='row' id='FIO'>
+      <%= f.label :FIO, 'Фамилия И.О.' %>
+      <%= f.text_field :FIO, class: 'col-8' %>
+    </div>
+
+    <% 4.times do |ind| %>
+      <div class='row' id='l<%= ind + 1 %>'>
+        <%= f.label :lesson, "Предмет #{ind + 1}" %>
+        <div class='col-8 select'>
+          <%= f.fields_for :lessons do |lesson_fields| %>
+            <%= lesson_fields.collection_select :id, @lessons, :id, :name, include_blank: true %>
+          <% end %>
+        </div>
+        <%= f.submit '+', class: 'col-1 offset-1 plus', id: "s#{ind + 1}", type: :button %>
+      </div>
+    <% end %>
+
+      <div class='row col-3' style='margin: 10px'>
+        <%= f.submit 'Обновить', id: "add" %>
+      </div>
+  <% end %>
+</div>

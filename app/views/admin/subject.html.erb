@@ -1,5 +1,6 @@
 <div class='header'>
-  <p class='text-center text'>Администратор расписания<p>
+  <p class='text_adm'>Администратор расписания</p>
+  <%= link_to 'На главную', admin_index_path, method: :get, class: 'go_back' %>
 </div>
 
 <div class='row'>
@@ -20,7 +21,7 @@
     <% end %>
 
   </div>
-  <div class='col-4 offset-2'>
+  <div class='col-4 offset-1'>
     <h3>Добавить предмет</h3>
     <%= form_for @new_lesson, url: admin_add_subject_path, method: 'post' do |f| %>
 
@@ -41,5 +42,6 @@
       <% end %>
     </div>
   </div>
+
 </div>
 

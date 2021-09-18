@@ -1,0 +1,30 @@
+<div class='header'>
+  <p class='text_adm'>Администратор расписания</p>
+  <%= link_to 'На главную', admin_index_path, method: :get, class: 'go_back' %>
+</div>
+
+<div class='container col-5', style='margin-top: 10vh'>
+  <%= form_with model: @admin, url: admin_update_admin_path, method: 'post' do |f| %>
+
+    <%= f.hidden_field :id %>
+    
+    <div class='row'>
+      <%= f.label :login, 'Логин' %>
+      <%= f.text_field :login %>
+    </div>
+    
+    <div class='row'>
+      <%= f.label :password, "Новый пароль" %>
+      <%= f.password_field :password %>
+    </div>
+    
+    <div class='row'>
+      <%= f.label :password_confirmation, "Подтвердите пароль" %>
+      <%= f.password_field :password_confirmation %>
+    </div>
+    
+    <div class=' text-center row col-3' style='margin: 10px'>
+      <%= f.submit 'Обновить' %>
+    </div>
+  <% end %>
+</div>

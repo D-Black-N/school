@@ -1,4 +1,31 @@
 class AdminController < ApplicationController
+  before_action :check_login
+
+  # домашняя страница, главное меню
+  def index
+    
+  end
+
+  # страница редактирования администратора
+  def passwd
+    @admin = Admin.find_by(id: session[:admin_id])
+  end
+
+  # обновление данных администратора
+  def update_admin
+    admin = Admin.find(params[:admin][:id])
+    admin.update(update_admin_params)
+    respond_to do |format|
+      if admin.save
+        format.html { redirect_to admin_passwd_path }
+        format.json { render json: admin }
+      else
+        format.html {redirect_to admin_passwd_path, message: "Ошибка обновления" }
+        format.json { render json: error_update_admin }
+      end
+    end  
+  end
+
   # медоты, работающие с расписанием
   def schedule
     s_array = Schedule.group(:class_id).order(:class_id)
@@ -114,6 +141,12 @@ class AdminController < ApplicationController
     end
   end
 
+  def update_teacher
+    @teacher = Teacher.find_by(id: params[:id])
+    @lessons = Lesson.all
+
+  end
+
   private 
 
   def subject_params
@@ -126,5 +159,9 @@ class AdminController < ApplicationController
 
   def schedule_params
     params.require(:schedule).permit!
+  end
+
+  def update_admin_params
+    params.require(:admin).permit(:id, :login, :password, :password_confirmation)
   end
 end
