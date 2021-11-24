@@ -48,33 +48,49 @@
                               </td>
 
                               <td>
+                                <% # поиск предметов и преподвателей для отображения в таблице расписания, а так же определение времени  %>
                                 <% day_lessons =  @schedule_class.select { |subj| subj.week_day == @week[ind] } %>
-                                <% selected_subj = @lessons.find { |elem| !day_lessons[count-1].nil? && elem.id == day_lessons[count-1].lesson_id } || %>
+                                
+                                <%  if day_lessons[count].nil? 
+
+                                      # выбор значений по умолчанию, если данное поле было пустое
+                                      selected_subj, selected_teacher = ""
+                                      start_hour, start_min = "0#{count + 9}", "00"
+                                      end_hour, end_min = "0#{count + 9}", "00"
+                                    else
+                                      # выбор значений из базы данных
+                                      selected_subj = @lessons.find { |sub| sub.id == day_lessons[count].lesson_id }.id
+                                      selected_teacher = @teachers.find { |teach| teach.id == day_lessons[count].teacher_id }.id
+                                      start_hour, start_min = day_lessons[count].t_start.hour, day_lessons[count].t_start.min
+                                      end_hour, end_min = day_lessons[count].t_end.hour, day_lessons[count].t_end.min
+                                    end
+                                %>
+
                                 <%= lesson_fields.fields_for :subject do |sub_field| %>
                                   <%= sub_field.collection_select :id, @lessons, 
-                                        :id, :name, include_blank: true
-                                         %>
+                                        :id, :name, include_blank: "",
+                                        selected: selected_subj %>
                                 <% end %>
                               </td>
 
                               <td>
                                 <%= lesson_fields.fields_for :teacher do |t_field| %>
                                   <%= t_field.collection_select :id, @teachers, 
-                                              :id, :FIO, include_blank: true %>
+                                              :id, :FIO, include_blank: "", selected: selected_teacher %>
                                 <% end %>
                               </td>
 
                               <td>
                                 <%= lesson_fields.fields_for :t_start do |st| %>
                                   <%= st.time_select :time, minute_step: 5, 
-                                              default: {hour: "0#{count + 9}", minute: "00"} %>
+                                              default: {hour: start_hour, minute: start_min} %>
                                 <% end %>
                               </td>
 
                               <td>
                                 <%= lesson_fields.fields_for :t_end do |et| %>
                                   <%= et.time_select :time, minute_step: 5, 
-                                              default: {hour: "0#{count + 9}", minute: "00"} %>
+                                              default: {hour: end_hour, minute: end_min} %>
                                 <% end %>
                               </td>
                             </tr>

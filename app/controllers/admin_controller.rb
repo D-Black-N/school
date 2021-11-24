@@ -35,7 +35,7 @@ class AdminController < ApplicationController
     s_array = Schedule.group(:class_id).order(:class_id)
                       .map { |elem| elem.class_id }
     @classes = s_array.map { |val| s_array.select { |el| el[1] == val[1] } }.uniq  
-    @message = params[:error] || "" 
+    @message = params[:message] || "" 
   end
 
   # данные, необходимые для отображения страницы создания расписания для нового класса
@@ -55,7 +55,7 @@ class AdminController < ApplicationController
         format.html { redirect_to admin_schedule_path }
         format.json { render json: schedule_init } # генерирует данные в формате json
       else
-        format.html { redirect_to admin_schedule_path(error: schedule_init[:error]) }
+        format.html { redirect_to admin_schedule_path(message: schedule_init[:error]) }
         format.json { render json: [schedule_init, schedule_params] } # генерирует данные в формате json 
       end
     end
@@ -64,7 +64,7 @@ class AdminController < ApplicationController
   # данные для отображения страницы обновления расписания класса
   def update_class
     @week = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница"]
-    @schedule_class = Schedule.where(class_id: params[:class_id])
+    @schedule_class = Schedule.where(class_id: params[:class_id]).order(:t_start)
     @lessons = Lesson.all
     @teachers = Teacher.all
   end
@@ -72,6 +72,9 @@ class AdminController < ApplicationController
   # метод удаления всего расписания
   def destroy_all_schedules 
     Schedule.delete_all
+    respond_to do |format|
+      format.html { redirect_to admin_schedule_path(message: "Все данные расписания удалены") }
+    end
   end
 
   # удаление расписания отдельного класса
