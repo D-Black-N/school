@@ -1,32 +1,15 @@
 class Teacher < ApplicationRecord
-  # many-to-many with lessons and teachers tables
+
+  # связь многие-ко-многим между предметами и преподавателями через таблицу lesson_teacher
   has_many :lesson_teachers
   has_many :lessons, through: :lesson_teachers
 
-  # many-to-many with schedules and teachers tables
-  has_many :schedule_teachers
-  has_many :schedules, through: :schedule_teachers
+  # связь один-ко-многим с таблицей расписания
+  has_many :schedules
 
+  # разрешение атрибутов предметов (для связи многие-ко-многим)
   accepts_nested_attributes_for :lessons
 
-  # validation
+  # валидация поля ФИО преподавателя
   validates :FIO, format: { with: /[А-Я][а-я]+\s[А-Я]\.[А-Я]\./ }
-
-  # new init function
-  def lesson_init(hash)
-    lesson_keys = hash[:lessons_attributes].select {|key, val| val[:id] != "" }
-    teacher = Teacher.new(FIO: hash[:FIO])
-    if teacher.save
-      lesson_keys.each_value do |val|
-        subject = Lesson.find(val[:id])
-        link = LessonTeacher.new(lesson: subject, teacher: teacher)
-        unless link.save
-          return nil
-        end
-      end
-    else 
-      return nil
-    end
-  end
-
 end

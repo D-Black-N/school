@@ -1,3 +1,4 @@
+# Примесь для обработки сессий администратора
 module SessionsHelper
   # вход администратора
   def log_in(admin)
@@ -20,8 +21,8 @@ module SessionsHelper
     @current_admin = nil
   end
 
+  # Проверка входа в систему, если не выполнена авторизация, отправляет администратора на страницу входа в систему
   def check_login
-    p "OK"
     if current_admin.nil?
       redirect_to admin_path message: "Войдите в систему"
     end

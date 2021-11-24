@@ -48,12 +48,12 @@
                               </td>
 
                               <td>
-                                <% lesson =  @schedule_class.select { |subj| subj.week_day == @week[ind] } %>
-                                <% select_subj = lesson[count].lessons unless lesson[count].nil? %>
+                                <% day_lessons =  @schedule_class.select { |subj| subj.week_day == @week[ind] } %>
+                                <% selected_subj = @lessons.find { |elem| !day_lessons[count-1].nil? && elem.id == day_lessons[count-1].lesson_id } || %>
                                 <%= lesson_fields.fields_for :subject do |sub_field| %>
                                   <%= sub_field.collection_select :id, @lessons, 
-                                        :id, :name, include_blank: true, 
-                                        selected: select_subj %>
+                                        :id, :name, include_blank: true
+                                         %>
                                 <% end %>
                               </td>
 

@@ -8,7 +8,7 @@
 		<table class='table table-borderless text-center'>
 			<thead>
 				<tr>
-					<% 11.times do |ind| %>
+					<% 11.times do |ind| %>			<!-- разбитие информации созданного расписания на таблицу по классам -->
 						<th><%= ind + 1 %></th>
 					<% end %>
 				</tr>
@@ -37,5 +37,9 @@
 	  <div class='row'>
 	  	<%= link_to "Удалить все расписание", admin_destroy_all_schedules_path, method: :delete %>
 	  </div>
+	</div>
+
+	<div class="error text-center" style='margin: 20px; color: red'>
+	  <%= @message %>
 	</div>
 </div>

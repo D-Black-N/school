@@ -12,7 +12,7 @@
         <% @lessons.each do |subj| %>
           <tr>
             <td><%= subj.name %></td>
-            <td><%= link_to "Удалить", admin_destroy_subject_path(id: subj.id), method: :delete %></td>
+            <td><%= link_to "Удалить", admin_destroy_subject_path(id: subj.id), method: :delete, data: { confirm: "Вы уверены?"} %></td>
           </tr>
         <% end %>
       </table>

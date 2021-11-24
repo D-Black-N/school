@@ -18,13 +18,6 @@ ActiveRecord::Schema.define(version: 2021_09_16_173050) do
     t.index ["login"], name: "index_admins_on_login", unique: true
   end
 
-  create_table "lesson_schedules", force: :cascade do |t|
-    t.integer "lesson_id", null: false
-    t.integer "schedule_id", null: false
-    t.index ["lesson_id"], name: "index_lesson_schedules_on_lesson_id"
-    t.index ["schedule_id"], name: "index_lesson_schedules_on_schedule_id"
-  end
-
   create_table "lesson_teachers", force: :cascade do |t|
     t.integer "lesson_id", null: false
     t.integer "teacher_id", null: false
@@ -37,19 +30,16 @@ ActiveRecord::Schema.define(version: 2021_09_16_173050) do
     t.index ["name"], name: "index_lessons_on_name", unique: true
   end
 
-  create_table "schedule_teachers", force: :cascade do |t|
-    t.integer "schedule_id", null: false
-    t.integer "teacher_id", null: false
-    t.index ["schedule_id"], name: "index_schedule_teachers_on_schedule_id"
-    t.index ["teacher_id"], name: "index_schedule_teachers_on_teacher_id"
-  end
-
   create_table "schedules", force: :cascade do |t|
     t.string "class_id", null: false
     t.string "week_day", null: false
     t.time "t_start", null: false
     t.time "t_end", null: false
+    t.integer "lesson_id", null: false
+    t.integer "teacher_id", null: false
     t.index ["class_id", "week_day", "t_start", "t_end"], name: "index_schedules_on_class_id_and_week_day_and_t_start_and_t_end"
+    t.index ["lesson_id"], name: "index_schedules_on_lesson_id"
+    t.index ["teacher_id"], name: "index_schedules_on_teacher_id"
   end
 
   create_table "teachers", force: :cascade do |t|
@@ -57,10 +47,6 @@ ActiveRecord::Schema.define(version: 2021_09_16_173050) do
     t.index ["FIO"], name: "index_teachers_on_FIO"
   end
 
-  add_foreign_key "lesson_schedules", "lessons"
-  add_foreign_key "lesson_schedules", "schedules"
   add_foreign_key "lesson_teachers", "lessons"
   add_foreign_key "lesson_teachers", "teachers"
-  add_foreign_key "schedule_teachers", "schedules"
-  add_foreign_key "schedule_teachers", "teachers"
 end

@@ -1,16 +1,15 @@
 class Lesson < ApplicationRecord
-  # many-to-many with lessons and teachers tables
+  # Связь многие-ко-многим с таблицей Преподватели
   has_many :lesson_teachers
-  has_many :teachers, through: :lesson_teachers
+  has_many :teachers, through: :lesson_teachers # Использование дополнительной таблицы lesson_teachers для связи
 
-  # many-to-many with lessons and teachers tables
+  # связь один-ко-многим с таблицей расписания
   has_many :schedules
-  has_many :schedules, through: :lesson_schedules
+  
+  # разрешение атрибутов предметов и расписания (для связи многие-ко-многим)
+  accepts_nested_attributes_for :teachers 
 
-  accepts_nested_attributes_for :teachers
-  accepts_nested_attributes_for :schedules
-
-  # validation
+  # Валидация полей при работе с данными
   validates :name, presence: true
 
 end

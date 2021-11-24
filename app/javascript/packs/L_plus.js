@@ -1,3 +1,4 @@
+// функция добавления нового поля ввода для создания преподавателей
 jQuery(function(){
   $(".plus").click(function(el){
     if (el.target.id == 's1') {

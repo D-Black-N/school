@@ -1,4 +1,6 @@
+# модель для связи предметов и преподавателей
 class LessonTeacher < ApplicationRecord
-  belongs_to :lesson
+  # отношение принадлежности к таблицам предметов и преподавателей
+  belongs_to :lesson  
   belongs_to :teacher
 end
